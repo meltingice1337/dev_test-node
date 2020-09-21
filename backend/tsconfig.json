@@ -4,8 +4,14 @@
       "lib": ["es6", "dom"],
       "types": ["reflect-metadata"],
       "module": "commonjs",
+      "moduleResolution": "node",
       "experimentalDecorators": true,
       "esModuleInterop": true,
-      "strict": true
+      "strict": true,
+      "baseUrl": "./",
+      "typeRoots": [
+        "./node_modules/@types",
+        "./typings",
+      ]
     }
   }

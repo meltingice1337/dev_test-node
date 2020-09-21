@@ -1,10 +1,12 @@
 import "reflect-metadata";
-import { Application, Request,Response,NextFunction } from "express";
+import { Application, Request, Response, NextFunction } from "express";
 import bodyParser from "body-parser";
-import { Container } from "inversify";
-import { bindings } from "./ioc/inversify.bindings";
 import { InversifyExpressServer } from "inversify-express-utils";
-import { exceptionMiddleware } from "./middlewares/exceptionMiddleware";
+
+import { containerFactory } from "./ioc/inversify.config";
+
+import { exceptionMiddleware } from "./middlewares/exception.middleware";
+import { validateJWT } from "./middlewares/validateJWT";
 
 require('dotenv').config();
 
@@ -12,13 +14,12 @@ require('dotenv').config();
   const PORT = process.env.SERVER_PORT ? Number.parseInt(process.env.SERVER_PORT) : 8000;
   const HOST = process.env.SERVER_HOST || 'localhost';
 
-  const container = new Container();
-  await container.loadAsync(bindings);
-
+  const container = await containerFactory();
   const inverisfyApp = new InversifyExpressServer(container);
 
   inverisfyApp.setConfig((app) => {
     app.use(bodyParser.json())
+    app.use(validateJWT(container))
   })
 
   inverisfyApp.setErrorConfig((app) => {

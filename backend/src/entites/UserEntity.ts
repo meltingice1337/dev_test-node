@@ -55,3 +55,24 @@ export class SignupUserResponseDTO {
     @Expose()
     username!: string;
 }
+
+export class SigninUserDTO {
+    @IsString()
+    @Expose()
+    username!: string;
+
+    @IsString()
+    @Expose()
+    password!: string;
+}
+
+export class SigninUserResponseDTO {
+    @Expose()
+    username!: string;
+
+    @Expose()
+    id!: number;
+
+    @Expose()
+    role!: UserRole;
+}

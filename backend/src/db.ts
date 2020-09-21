@@ -10,6 +10,5 @@ export const connectToDb = async (): Promise<Sequelize> => {
         dialect: 'postgres'
     });
 
-    await sequelize.authenticate();
     return sequelize;
 }

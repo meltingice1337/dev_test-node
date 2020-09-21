@@ -10,4 +10,8 @@ export class UserRepository {
     async create(user: UserAttributes): Promise<UserModel> {
        return this.user.create(user);
     }
+
+    async getUserByUsername(username: string): Promise<UserModel | null> {
+        return this.user.findOne({ where: { username } });
+    }
 }
