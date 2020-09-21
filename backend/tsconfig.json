@@ -1,9 +1,10 @@
 {
     "compilerOptions": {
-      "target": "es6",
+      "target": "es5",
+      "lib": ["es6", "dom"],
+      "types": ["reflect-metadata"],
       "module": "commonjs",
-      "rootDir": "./",
-      "outDir": "./build",
+      "experimentalDecorators": true,
       "esModuleInterop": true,
       "strict": true
     }
