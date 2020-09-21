@@ -5,13 +5,17 @@ const TYPES = {
 
     // Controllers
     UserController: Symbol('UserController'),
+    AuthController: Symbol('AuthController'),
 
     // Entities
     User: Symbol('User'),
 
     // Repositories
-    UserRepository: Symbol('UserRepository')
+    UserRepository: Symbol('UserRepository'),
 
+    // Services
+    AuthService: Symbol('AuthService'),
+    UserService: Symbol('UserService'),
 }
 
 export default TYPES;

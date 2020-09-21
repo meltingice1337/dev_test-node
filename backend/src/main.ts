@@ -1,7 +1,10 @@
 import "reflect-metadata";
+import { Application, Request,Response,NextFunction } from "express";
+import bodyParser from "body-parser";
 import { Container } from "inversify";
 import { bindings } from "./ioc/inversify.bindings";
 import { InversifyExpressServer } from "inversify-express-utils";
+import { exceptionMiddleware } from "./middlewares/exceptionMiddleware";
 
 require('dotenv').config();
 
@@ -12,8 +15,17 @@ require('dotenv').config();
   const container = new Container();
   await container.loadAsync(bindings);
 
-  const app = new InversifyExpressServer(container);
-  const server = app.build();
+  const inverisfyApp = new InversifyExpressServer(container);
+
+  inverisfyApp.setConfig((app) => {
+    app.use(bodyParser.json())
+  })
+
+  inverisfyApp.setErrorConfig((app) => {
+    app.use(exceptionMiddleware);
+  });
+
+  const server = inverisfyApp.build();
 
   server.listen(PORT, HOST, () => {
     console.log(`Server is running at https://${HOST}:${PORT}`);

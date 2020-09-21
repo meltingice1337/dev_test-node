@@ -8,7 +8,15 @@ module.exports = {
         primaryKey: true,
         autoIncrement: true
       },
-      data: Sequelize.DataTypes.JSONB,
+      username: {
+        type: Sequelize.DataTypes.STRING,
+        unique: true
+      },
+      role: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0
+      },
+      password: Sequelize.DataTypes.STRING,
       updatedAt: Sequelize.DataTypes.DATE,
       createdAt: Sequelize.DataTypes.DATE
     }, {

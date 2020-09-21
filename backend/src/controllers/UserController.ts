@@ -2,7 +2,7 @@
 import { inject } from 'inversify';
 import { controller, httpGet, interfaces } from 'inversify-express-utils';
 
-import { UserModel } from '../entites/UserFactory';
+import { UserModel } from '../entites/UserEntity';
 
 import TYPES from '../ioc/types';
 
@@ -12,9 +12,4 @@ import { UserRepository } from '../repository/UserRepository';
 export class UserController {
 
     constructor() { }
-
-    @httpGet("/")
-     private async index(): Promise<UserModel[]> {
-        // return this.userRepository.findAll();
-    }
 }

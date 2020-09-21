@@ -1,13 +1,15 @@
 import { Sequelize, DataTypes, Model, ModelDefined, BuildOptions } from "sequelize";
 
-interface UserDataAttributes {
-    username: string;
-    password: string;
-}
+import { IsString } from 'class-validator'
+import { Expose } from "class-transformer";
+
+export enum UserRole { Internal, External };
 
 export interface UserAttributes {
     id: number;
-    data: UserDataAttributes;
+    username: string;
+    password: string;
+    role: UserRole;
 }
 
 export interface UserModel extends Model<UserAttributes>, UserAttributes { }
@@ -25,8 +27,31 @@ export function UserFactory(sequelize: Sequelize): UserStatic {
             primaryKey: true,
             autoIncrement: true
         },
-        username: DataTypes.STRING,
+        username: {
+            type: DataTypes.STRING,
+            unique: true
+        },
         password: DataTypes.STRING,
-
+        role: {
+            type: DataTypes.NUMBER,
+            defaultValue: 0
+        }
     })
+}
+
+export class SignupUserDTO {
+    @IsString()
+    @Expose()
+    username!: string;
+
+    @IsString()
+    @Expose()
+    password!: string;
+}
+
+export class SignupUserResponseDTO {
+    @Expose()
+    id!: number;
+    @Expose()
+    username!: string;
 }

@@ -1,6 +1,6 @@
 import { inject, injectable } from "inversify";
 import { Model } from "sequelize";
-import { User, UserAttributes, UserModel, UserStatic } from "../entites/UserFactory";
+import { User, UserAttributes, UserModel, UserStatic } from "../entites/UserEntity";
 import TYPES from "../ioc/types";
 
 @injectable()
