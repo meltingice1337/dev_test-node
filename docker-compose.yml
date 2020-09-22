@@ -1,8 +1,62 @@
-db:
+
+version: '2.4'
+
+services:
+  fe:
+    build:
+      context: .
+      dockerfile: ./dev_test-node-fe.dockerfile
+    restart: unless-stopped
+    ports: 
+      - 8080:80
+    environment: 
+      - BACKEND_API=http://localhost:8081
+    networks:
+      default:
+        aliases:
+          - fe
+  be:
+    build:
+      context: .
+      dockerfile: ./dev_test-node-be.dockerfile
+    restart: unless-stopped
+    depends_on:
+      - db
+    ports: 
+      - 8081:8081
+    environment: 
+      - SERVER_PORT=8081
+      - SERVER_HOST=0.0.0.0
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - JWT_SECRET=changeme
+    networks:
+      default:
+        aliases:
+          - be
+  db:
     image: postgres
+    volumes:
+      - type: volume
+        source: db-data
+        target: /var/lib/mysql
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     ports:
       - 5432:5432
+    networks:
+      default:
+        aliases:
+          - db
+
+networks:
+  default:
+
+volumes:
+  db-data:
+    

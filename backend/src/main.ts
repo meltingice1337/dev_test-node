@@ -32,6 +32,6 @@ require('dotenv').config();
   const server = inverisfyApp.build();
 
   server.listen(PORT, HOST, () => {
-    console.log(`Server is running at https://${HOST}:${PORT}`);
+    console.log(`Server is running at http://${HOST}:${PORT}`);
   });
 })()
