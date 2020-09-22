@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from "axios"
+import axios, { AxiosError, AxiosRequestConfig } from "axios"
 import { useEffect, useRef, useState } from "react";
 
 const handleRequest = (token: string, request: AxiosRequestConfig): AxiosRequestConfig => {
@@ -6,6 +6,10 @@ const handleRequest = (token: string, request: AxiosRequestConfig): AxiosRequest
         request.headers['Authorization'] = `Bearer ${token}`;
     }
     return request;
+}
+
+const handleErrorResponse = (error: AxiosError): void => {
+    console.log({ error })
 }
 
 export const useAxios = (): {
@@ -24,6 +28,8 @@ export const useAxios = (): {
 
     useEffect(() => {
         axios.defaults.baseURL = process.env.BACKEND_API;
+        axios.interceptors.response.use((response) => response, handleErrorResponse);
+
     }, [])
 
     return { setRequestInterceptor };

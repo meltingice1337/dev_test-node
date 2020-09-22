@@ -1,16 +1,32 @@
 import React, { FunctionComponent } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 import { SignInForm } from './SignIn.model';
 
 import AuthenticationService from '@services/AuthenticationService';
+import { useAuthContext } from '@contexts/AuthenticationContext';
 
 const SignUp: FunctionComponent = () => {
     const { handleSubmit, register } = useForm();
 
-    const onSubmit = (data: SignInForm): void => {
-        AuthenticationService.login({ username: data.username, password: data.password })
-            .then(v => console.log(v));
+    const { authenticate } = useAuthContext();
+
+    const onSubmit = async (data: SignInForm): Promise<void> => {
+        const response = await AuthenticationService.login({ username: data.username, password: data.password });
+        if (response) {
+            const token = response.data;
+            authenticate(token);
+
+            if (data.rememberMe) {
+                localStorage.setItem('token', token);
+            } else {
+                sessionStorage.setItem('token', token);
+            }
+
+        } else {
+            toast.error('Invalid credentials !');
+        }
     }
     return (
         <form onSubmit={handleSubmit(onSubmit)}>

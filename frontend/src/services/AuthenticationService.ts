@@ -1,9 +1,9 @@
-import axios, { AxiosPromise } from 'axios';
+import axios, { AxiosPromise, AxiosResponse } from 'axios';
 
 import { LoginUserModel } from '@models/authentication.models';
 
 const AuthenticationService = {
-    login: (user: LoginUserModel): AxiosPromise<string> => axios.post('/auth/login', user)
+    login: async (user: LoginUserModel): Promise<AxiosResponse<string>> => await axios.post('/auth/signin', user)
 }
 
 export default AuthenticationService;
