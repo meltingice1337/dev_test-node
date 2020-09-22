@@ -24,13 +24,24 @@
         "strictNullChecks": true,
         "target": "es5",
         "baseUrl": "./",
+        "paths": {
+            "@pages/*": [
+                "src/pages/*"
+            ],
+            "@routes/*": [
+                "src/routes/*"
+            ],
+            "@components/*": [
+                "src/components/*"
+            ],
+        },
         "typeRoots": [
             "./node_modules/@types",
             "./typings"
         ]
     },
     "include": [
-        "./src/*",
+        "./src/**/*",
         "./typings",
     ],
     "exclude": [

@@ -21,6 +21,11 @@ const config = {
 	},
 	resolve: {
 		extensions: ['.ts', '.tsx', '.js', '.scss', '.css'],
+		alias: {
+			'@pages': path.join(appSourcePath, 'pages'),
+			'@routes': path.join(appSourcePath, 'routes'),
+			'@components': path.join(appSourcePath, 'components'),
+		}
 	},
 	output: {
 		path: path.join(__dirname, '/dist'),
@@ -53,8 +58,10 @@ const config = {
 					{
 						loader: 'postcss-loader',
 						options: {
-							ident: 'postcss',
-							plugins: [autoprefixer]
+							postcssOptions: {
+								ident: 'postcss',
+								plugins: [autoprefixer]
+							}
 						}
 					},
 					'sass-loader'
