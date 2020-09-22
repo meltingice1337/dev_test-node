@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo } from 'react';
+import React, { FunctionComponent, MouseEvent, useMemo } from 'react';
 
 import { RouteRenderer } from '@components/route-renderer/RouteRenderer';
 
@@ -11,10 +11,15 @@ import { Link } from 'react-router-dom';
 
 const DashboardLayout: FunctionComponent = () => {
 
-    const { authUser } = useAuthContext();
+    const { authUser, logout } = useAuthContext();
     const { hasRole } = usePermissions();
 
     const filteredAccess = useMemo(() => dashboardLayoutAccess.filter(a => hasRole(a.role)), [authUser, hasRole]);
+
+    const onLogoutClick = (event: MouseEvent) => {
+        event.preventDefault();
+        logout();
+    }
 
     const renderNavigation = () => {
         if (filteredAccess.length > 1) {
@@ -35,8 +40,11 @@ const DashboardLayout: FunctionComponent = () => {
 
     return (
         <div className="ml-auto mr-auto mt-4 mb-4 container bg-white rounded p-4">
-            <h1 className="mt-2">Welcome, {authUser?.username}</h1>
-            <h5>You are logged in as an <i>{authUser?.role === UserRoleModel.Internal ? 'Internal' : 'External'}</i> user</h5>
+            <div className="d-flex">
+                <h1 className="mt-2">Welcome, {authUser?.username}</h1>
+                <a href="#" className="ml-auto align-self-center" onClick={onLogoutClick}>Logout</a>
+            </div>
+            <h5>You are logged in as an <i>{authUser?.role === UserRoleModel.Internal ? 'Internal' : 'External'}</i> user </h5>
             {renderNavigation()}
             <div className="tab-content mt-4">
                 <RouteRenderer routes={routes} />

@@ -8,9 +8,10 @@ import { useAxios } from '@hooks/axios.hook';
 interface AuthenticationContextData {
     authUser: UserModel | null;
     authenticate: (token: string) => void;
+    logout: () => void;
 }
 
-const AuthenticationContext = createContext<AuthenticationContextData>({ authUser: null, authenticate: () => { void 0 } });
+const AuthenticationContext = createContext<AuthenticationContextData>({ authUser: null, authenticate: () => { void 0 }, logout: () => { void 0; } });
 
 export const AuthenticationProvider: FunctionComponent = ({ children }) => {
     const [authUser, setAuthUser] = useState<UserModel | null>(null)
@@ -21,6 +22,12 @@ export const AuthenticationProvider: FunctionComponent = ({ children }) => {
         setRequestInterceptor(token);
         const decoded = jwt_decode<UserModel>(token);
         setAuthUser(decoded);
+    }, [setAuthUser]);
+
+    const logout = useCallback(() => {
+        localStorage.removeItem('token');
+        sessionStorage.removeItem('token');
+        setAuthUser(null);
     }, [setAuthUser]);
 
     useEffect(() => {
@@ -34,7 +41,7 @@ export const AuthenticationProvider: FunctionComponent = ({ children }) => {
     }, [authenticate]);
 
     return (
-        <AuthenticationContext.Provider value={{ authUser, authenticate }}>
+        <AuthenticationContext.Provider value={{ authUser, authenticate, logout }}>
             {children}
         </AuthenticationContext.Provider >
     )
