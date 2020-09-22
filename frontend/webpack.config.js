@@ -89,49 +89,11 @@ if (!isDevelopment) {
 	config.optimization = {
 		minimizer: [
 			new TerserPlugin({
-				cache: true,
-				parallel: true,
-				sourceMap: false,
-				extractComments: false,
 				terserOptions: {
-					compress: {
-						arrows: true,
-						booleans: true,
-						collapse_vars: true,
-						comparisons: true,
-						conditionals: true,
-						dead_code: true,
-						evaluate: true,
-						hoist_funs: true,
-						hoist_props: true,
-						hoist_vars: true,
-						if_return: true,
-						inline: true,
-						loops: true,
-						negate_iife: true,
-						properties: true,
-						reduce_funcs: true,
-						reduce_vars: true,
-						sequences: true,
-						switches: true,
-						toplevel: true,
-						typeofs: true,
-						unused: true
-					},
-					mangle: {
-						safari10: true
-					},
 					output: {
-						ascii_only: true,
 						comments: false,
-						ecma: 6
-					},
-					parse: {
-						ecma: 8
 					}
-				},
-				test: /\.js(\?.*)?$/i,
-				warningsFilter: () => true
+				}
 			})
 		],
 		splitChunks: {
