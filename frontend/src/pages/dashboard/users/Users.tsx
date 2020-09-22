@@ -1,11 +1,12 @@
 import React, { FunctionComponent, useCallback, useEffect, useState } from "react";
 
-import { ExternalUserModel } from "@models/user.models";
+import { CreateUserModel, ExternalUserModel } from "@models/user.models";
 import UserService from "@services/UserService";
+import { CreateUser } from "./CreateUser";
 
 const Users: FunctionComponent = () => {
-
     const [users, setUsers] = useState<ExternalUserModel[]>([])
+    const [showCreateUser, setShowCreateUser] = useState(false);
 
     const getUsers = useCallback(async () => {
         const response = await UserService.getAllExternal();
@@ -17,6 +18,10 @@ const Users: FunctionComponent = () => {
     useEffect(() => {
         getUsers();
     }, [getUsers])
+
+    const handleCreateUser = (user: CreateUserModel) => void {
+
+    }
 
     const renderData = (): JSX.Element[] => {
         return users.map((user, index) => (
@@ -30,7 +35,8 @@ const Users: FunctionComponent = () => {
 
     return (
         <>
-            <button className="btn btn-success mb-2">Create internal user</button>
+            <button className="btn btn-success mb-2" onClick={() => setShowCreateUser(true)}>Create external user</button>
+            <CreateUser visible={showCreateUser} onClose={() => setShowCreateUser(false)} onCreateUser={handleCreateUser} />
             <table className="table">
                 <thead className="thead-dark">
                     <tr>
