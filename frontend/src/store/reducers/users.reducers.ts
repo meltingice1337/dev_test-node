@@ -12,6 +12,12 @@ const usersReducer: Reducer<ExternalUserModel[], DispatchAction<ActionType>> = (
         return [...action.payload];
     } else if (action.type === ACTION_TYPES.USERS.ADD_USER) {
         return [...state, action.payload];
+    } else if (action.type === ACTION_TYPES.USERS.DELETE_USER) {
+        const id = action.payload;
+        const userIndex = state.findIndex(user => user.id === id);
+        const newState = [...state];
+        newState.splice(userIndex, 1);
+        return [...newState];
     }
     return state;
 }

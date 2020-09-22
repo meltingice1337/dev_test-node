@@ -12,7 +12,14 @@ const addUser = (user: ExternalUserModel) => ({
     payload: user
 });
 
+const deleteUser = (userId: number) => ({
+    type: ACTION_TYPES.USERS.DELETE_USER,
+    paylad: userId
+});
+
+
 export default {
     setUsers,
-    addUser
+    addUser,
+    deleteUser
 }

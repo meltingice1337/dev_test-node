@@ -1,14 +1,14 @@
 import React, { FunctionComponent, useCallback, useEffect, useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
+import { toast } from "react-toastify";
 
-import { CreateUserModel } from "@models/user.models";
+import { CreateUserModel, ExternalUserModel } from "@models/user.models";
 
 import UserService from "@services/UserService";
 import { CreateUser } from "./CreateUser";
 
 import { AppState } from "@store/root-reducer";
 import userActions from "@store/actions/user.actions";
-import { toast } from "react-toastify";
 
 const Users: FunctionComponent = () => {
     const users = useSelector((store: AppState) => store.users);
@@ -36,12 +36,21 @@ const Users: FunctionComponent = () => {
         }
     }
 
+    const deleteUser = async (user: ExternalUserModel) => {
+        const response = await UserService.deleteUser(user.id);
+        if (response) {
+            toast.success('User deleted with success !');
+            dispatch(userActions.deleteUser(user.id));
+        }
+    }
+
     const renderData = (): JSX.Element[] => {
         return users.map((user, index) => (
             <tr key={`user-table-${index}`}>
                 <th scope="row">{index}</th>
                 <td>{user.id}</td>
                 <td>{user.username}</td>
+                <td><button className="btn btn-danger" onClick={deleteUser.bind(null, user)}>Delete user</button></td>
             </tr>
         ));
     }
@@ -56,6 +65,7 @@ const Users: FunctionComponent = () => {
                         <th scope="col">#</th>
                         <th scope="col">Id</th>
                         <th scope="col">Username</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
