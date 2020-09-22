@@ -1,26 +1,39 @@
 import React, { FunctionComponent, useCallback, useEffect, useState } from "react";
+import { useSelector, useDispatch } from 'react-redux';
 
-import { CreateUserModel, ExternalUserModel } from "@models/user.models";
+import { CreateUserModel } from "@models/user.models";
+
 import UserService from "@services/UserService";
 import { CreateUser } from "./CreateUser";
 
+import { AppState } from "@store/root-reducer";
+import userActions from "@store/actions/user.actions";
+import { toast } from "react-toastify";
+
 const Users: FunctionComponent = () => {
-    const [users, setUsers] = useState<ExternalUserModel[]>([])
+    const users = useSelector((store: AppState) => store.users);
+    const dispatch = useDispatch();
+
     const [showCreateUser, setShowCreateUser] = useState(false);
 
     const getUsers = useCallback(async () => {
         const response = await UserService.getAllExternal();
         if (response) {
-            setUsers(response.data)
+            dispatch(userActions.setUsers(response.data));
         }
-    }, [setUsers])
+    }, [])
 
     useEffect(() => {
         getUsers();
     }, [getUsers])
 
-    const handleCreateUser = (user: CreateUserModel) => void {
-
+    const handleCreateUser = async (user: CreateUserModel) => {
+        const response = await UserService.createUser(user);
+        if (response) {
+            toast.success('User created with success !');
+            dispatch(userActions.addUser(response.data));
+            setShowCreateUser(false);
+        }
     }
 
     const renderData = (): JSX.Element[] => {

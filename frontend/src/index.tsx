@@ -1,9 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-import { BrowserRouter } from 'react-router-dom';
-import App from './App';
 import { toast } from 'react-toastify';
+import { BrowserRouter } from 'react-router-dom';
+
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+
+import App from './App';
 
 import { AuthenticationProvider } from '@contexts/AuthenticationContext';
 
@@ -11,14 +14,23 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 import '../public/styles/main.scss';
+import { rootReducer } from './store/root-reducer';
 
 toast.configure();
 
+const store = createStore(
+    rootReducer,
+    //@ts-ignore
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+)
+
 ReactDOM.render(
     <BrowserRouter>
-        <AuthenticationProvider>
-            <App />
-        </AuthenticationProvider>
+        <Provider store={store}>
+            <AuthenticationProvider>
+                <App />
+            </AuthenticationProvider>
+        </Provider>
     </BrowserRouter>,
     document.getElementById('root')
 );
