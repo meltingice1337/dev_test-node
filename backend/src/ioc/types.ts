@@ -6,6 +6,7 @@ const TYPES = {
     // Controllers
     UserController: Symbol('UserController'),
     AuthController: Symbol('AuthController'),
+    HealthCheckController: Symbol('HealthCheckController'),
 
     // Entities
     User: Symbol('User'),

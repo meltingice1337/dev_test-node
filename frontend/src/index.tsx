@@ -9,6 +9,7 @@ import { createStore } from 'redux';
 import App from './App';
 
 import { AuthenticationProvider } from '@contexts/AuthenticationContext';
+import { HealthCheckProvider } from '@contexts/HealthCheckContext';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -26,11 +27,13 @@ const store = createStore(
 
 ReactDOM.render(
     <BrowserRouter>
-        <Provider store={store}>
-            <AuthenticationProvider>
-                <App />
-            </AuthenticationProvider>
-        </Provider>
+        <HealthCheckProvider>
+            <Provider store={store}>
+                <AuthenticationProvider>
+                    <App />
+                </AuthenticationProvider>
+            </Provider>
+        </HealthCheckProvider>
     </BrowserRouter>,
     document.getElementById('root')
 );

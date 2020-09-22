@@ -4,7 +4,6 @@ import TYPES from "./types";
 
 import { connectToDb } from "../db";
 
-import { UserController } from "../controllers/UserController";
 
 import { UserFactory } from "../entites/UserEntity";
 
@@ -12,8 +11,10 @@ import { UserService } from "../services/UserService";
 import { AuthService } from "../services/AuthService";
 
 import { UserRepository } from "../repository/UserRepository";
-import { AuthController } from "../controllers/AuthController";
 
+import { UserController } from "../controllers/UserController";
+import { AuthController } from "../controllers/AuthController";
+import { HealthCheckController } from "../controllers/HealthCheckController";
 
 export const containerFactory = async () => {
 
@@ -25,6 +26,7 @@ export const containerFactory = async () => {
     // Controllers
     container.bind<UserController>(TYPES.UserController).to(UserController);
     container.bind<AuthController>(TYPES.AuthController).to(AuthController);
+    container.bind<HealthCheckController>(TYPES.HealthCheckController).to(HealthCheckController);
 
     // Entites
     const user = UserFactory(sequelize);
