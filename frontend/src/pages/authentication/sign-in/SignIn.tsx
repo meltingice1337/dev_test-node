@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { useHistory } from 'react-router-dom';
 
 import { SignInForm } from './SignIn.model';
 
@@ -11,6 +12,7 @@ const SignUp: FunctionComponent = () => {
     const { handleSubmit, register } = useForm();
 
     const { authenticate } = useAuthContext();
+    const history = useHistory();
 
     const onSubmit = async (data: SignInForm): Promise<void> => {
         const response = await AuthenticationService.login({ username: data.username, password: data.password });
@@ -23,6 +25,8 @@ const SignUp: FunctionComponent = () => {
             } else {
                 sessionStorage.setItem('token', token);
             }
+
+            history.push('/');
 
         } else {
             toast.error('Invalid credentials !');
