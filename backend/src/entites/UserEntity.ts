@@ -3,7 +3,7 @@ import { Sequelize, DataTypes, Model, ModelDefined, BuildOptions } from "sequeli
 import { IsString } from 'class-validator'
 import { Expose } from "class-transformer";
 
-export enum UserRole { Internal, External };
+export enum UserRole { External, Internal };
 
 export interface UserAttributes {
     id: number;

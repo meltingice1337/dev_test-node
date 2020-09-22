@@ -1,21 +1,20 @@
-import { NextFunction, Request,Response } from 'express';
-import { inject, injectable } from 'inversify';
-import { BaseMiddleware } from 'inversify-express-utils';
-import { UserRole } from '../entites/UserEntity';
-import { AuthService } from '../services/AuthService';
-import TYPES from '../ioc/types';
+import { NextFunction, Request, Response } from 'express';
+import { SigninUserResponseDTO, UserRole } from '../entites/UserEntity';
+import { HttpException } from '../exceptions/HttpException';
 
-@injectable()
-export class AuthenticatedMiddleware {
-    constructor(
-        @inject(TYPES.AuthService) private readonly authService: AuthService,
-    ) {}
+export const authenticated = (role: UserRole) =>
+    (req: Request, _: Response, next: NextFunction) => {
+        console.log(req.locals)
+        if (!req.locals) {
+            next(new HttpException(401, 'You are not logged in !'));
+        } else {
+            const user = req.locals as SigninUserResponseDTO;
 
-    public handler(
-        req: Request,
-        res: Response,
-        next: NextFunction
-    ) {
+            if (user.role >= role) {
+                next();
+            } else {
+                next(new HttpException(403, 'You do not have access to see this !'));
+            }
+        }
         next();
     }
-}

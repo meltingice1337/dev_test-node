@@ -7,16 +7,17 @@ import TYPES from '../ioc/types';
 const extractJwt = (req: Request) => {
     if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
         return req.headers.authorization.split(' ')[1];
-      }
-  }
+    }
+}
 
 export const validateJWT = (container: Container) => {
     const authService = container.get<AuthService>(TYPES.AuthService);
     return (req: Request, res: Response, next: NextFunction) => {
         const token = extractJwt(req);
-        if(token) {
+        if (token) {
             try {
-                res.locals = authService.verifyToken(token);
+                req.locals = authService.verifyToken(token);
+                console.log(req.locals)
             } catch {
                 throw new HttpException(401, 'Invalid token !');
             }

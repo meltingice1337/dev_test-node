@@ -14,7 +14,7 @@ module.exports = {
       },
       role: {
         type: Sequelize.INTEGER,
-        defaultValue: 0
+        defaultValue: 1
       },
       password: Sequelize.DataTypes.STRING(128),
       updatedAt: Sequelize.DataTypes.DATE,
