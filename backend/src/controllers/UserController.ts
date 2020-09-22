@@ -1,6 +1,6 @@
 
 import { Request } from 'express';
-import { controller, httpGet, httpPost, interfaces, request } from 'inversify-express-utils';
+import { controller, httpDelete, httpGet, httpPost, interfaces, request, requestParam } from 'inversify-express-utils';
 import { authenticated } from '../middlewares/authenticated.middleware';
 
 import TYPES from '../ioc/types';
@@ -38,6 +38,20 @@ export class UserController {
         } catch (e) {
             console.log(e)
             throw new HttpException(400, 'A user with this is username is already existent');
+        }
+    }
+
+    @httpDelete('/:id')
+    public async deleteExternalUser(@requestParam('id') id: number, @request() req: Request) {
+        console.log('test')
+        const authUser = req.locals;
+        try {
+            const result = await this.userService.deleteExternalUser(id, authUser);
+            if (!result) {
+                throw new HttpException(400, 'User not found or you did not create this user');
+            }
+        } catch {
+            throw new HttpException(400, 'User not found or you did not create this user');
         }
     }
 }

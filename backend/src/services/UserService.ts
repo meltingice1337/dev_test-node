@@ -33,4 +33,8 @@ export class UserService {
         const users = await this.userRepository.getUsersByCreationUser(user.id);
         return users.map(user => plainToClass(ExternalUserResponseDTO, user.get(), { strategy: 'excludeAll' }));
     }
+
+    async deleteExternalUser(userId: number, authUser: UserAttributes): Promise<number | null> {
+        return this.userRepository.deleteExternalUserByIdAndOwnage(userId, authUser.id);
+    }
 }
