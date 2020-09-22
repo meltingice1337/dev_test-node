@@ -34,6 +34,18 @@
             "@components/*": [
                 "src/components/*"
             ],
+            "@services/*": [
+                "src/services/*"
+            ],
+            "@contexts/*": [
+                "src/contexts/*"
+            ],
+            "@utils/*": [
+                "src/utils/*"
+            ],
+            "@models/*": [
+                "src/models/*"
+            ],
         },
         "typeRoots": [
             "./node_modules/@types",

@@ -1,5 +1,7 @@
 import React, { createContext, FunctionComponent, useContext, useState } from 'react';
 
+import { useAxios } from '@utils/axios.utils';
+
 interface UserData {
     username: string;
     id: string;
@@ -8,7 +10,7 @@ interface UserData {
 interface AuthenticationContextData {
     value: UserData | null;
 
-    authenticate: (value: UserData) => void;
+    authenticate: (token: string) => void;
 }
 
 const AuthenticationContext = createContext<AuthenticationContextData | null>(null);
@@ -16,8 +18,15 @@ const AuthenticationContext = createContext<AuthenticationContextData | null>(nu
 export const AuthenticationProvider: FunctionComponent = ({ children }) => {
     const [authData, setAuthData] = useState<UserData | null>(null)
 
+    const { setRequestInterceptor } = useAxios();
+
+    const authenticate = (token: string): void => {
+        setRequestInterceptor(token);
+    }
+
+
     return (
-        <AuthenticationContext.Provider value={{ value: authData, authenticate: setAuthData }}>
+        <AuthenticationContext.Provider value={{ value: authData, authenticate }}>
             {children}
         </AuthenticationContext.Provider >
     )

@@ -3,11 +3,14 @@ import { useForm } from 'react-hook-form';
 
 import { SignInForm } from './SignIn.model';
 
+import AuthenticationService from '@services/AuthenticationService';
+
 const SignUp: FunctionComponent = () => {
     const { handleSubmit, register } = useForm();
 
     const onSubmit = (data: SignInForm): void => {
-        console.log({ data })
+        AuthenticationService.login({ username: data.username, password: data.password })
+            .then(v => console.log(v));
     }
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
