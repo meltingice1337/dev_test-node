@@ -1,5 +1,5 @@
 
-import { controller, httpGet, interfaces } from 'inversify-express-utils';
+import { controller, httpGet } from 'inversify-express-utils';
 import { authenticated } from '../middlewares/authenticated.middleware';
 
 import { UserRole } from '../entites/UserEntity';

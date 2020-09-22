@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon --files src/main.ts",
+    "migrate:up": "sequelize-cli db:migrate",
+    "migrate:down": "sequelize-cli db:migrate:undo:all",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

@@ -2,7 +2,7 @@ import { plainToClass } from 'class-transformer';
 import { Request } from 'express';
 import { inject } from 'inversify';
 import { controller, httpPost, request } from 'inversify-express-utils'
-import { SigninUserDTO, SigninUserResponseDTO, SignupUserDTO, SignupUserResponseDTO, UserAttributes, UserModel } from '../entites/UserEntity';
+import { SigninUserDTO, SigninUserResponseDTO, SignupUserDTO, SignupUserResponseDTO, UserAttributes, UserModel, UserRole } from '../entites/UserEntity';
 import { HttpException } from '../exceptions/HttpException';
 
 import TYPES from '../ioc/types';
@@ -22,7 +22,7 @@ export class AuthController {
     public async signUp(@request() req: Request<null, null, UserAttributes>): Promise<SignupUserResponseDTO> {
         const hashedPassword = this.authService.hashPassword(req.body.password);
         try {
-            const createdUser = await this.userService.createUser({ ...req.body, password: hashedPassword });
+            const createdUser = await this.userService.createUser({ ...req.body, password: hashedPassword, role: UserRole.Internal });
             return plainToClass(SignupUserResponseDTO, createdUser, { strategy: 'excludeAll' });
         } catch {
             throw new HttpException(400, 'This user already registered');
