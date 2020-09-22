@@ -8,7 +8,7 @@ const Users = lazy((): Promise<{ default: FunctionComponent }> => import('@pages
 export const routes: RoutePropsWithRole[] = [
     {
         component: Users,
-        role: UserRoleModel.External,
+        role: UserRoleModel.Internal,
         path: '/users'
     }
 ]

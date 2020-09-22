@@ -15,7 +15,6 @@ export const RouteRenderer: FunctionComponent<RouteRendererProps> = (props: Rout
 
     useLayoutEffect(() => {
         const exists = filteredRoutes.find(r => matchPath(location.pathname, { path: r.path }));
-        console.log({ filteredRoutes })
         if (!exists && (
             props.defaultRoute || filteredRoutes.length > 0)
         ) {

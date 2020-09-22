@@ -16,11 +16,13 @@ const App: FunctionComponent = () => {
     }
 
     return (
-        <Suspense fallback={<Spinner />}>
-            <Switch>
-                {authUser ? renderLayout(DashboardLayout) : renderLayout(AuthenticationLayout)}
-            </Switch>
-        </Suspense>
+        <main>
+            <Suspense fallback={<Spinner />}>
+                <Switch>
+                    {authUser ? renderLayout(DashboardLayout) : renderLayout(AuthenticationLayout)}
+                </Switch>
+            </Suspense>
+        </main>
     )
 }
 
