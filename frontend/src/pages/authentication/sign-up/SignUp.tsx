@@ -1,22 +1,22 @@
 import React, { FunctionComponent } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { SignUpForm } from './SignUp.model';
 
 import AuthenticationService from '@services/AuthenticationService';
-import { useAuthContext } from '@contexts/AuthenticationContext';
 
 const SignUp: FunctionComponent = () => {
     const { handleSubmit, register } = useForm();
 
-    const { authenticate } = useAuthContext();
     const history = useHistory();
 
     const onSubmit = async (data: SignUpForm): Promise<void> => {
         const response = await AuthenticationService.signup({ username: data.username, password: data.password });
         if (response) {
             history.push('/sigin');
+            toast.success('Your account was created with success. You can login now.')
         }
     }
     return (
