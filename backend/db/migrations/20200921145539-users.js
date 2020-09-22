@@ -17,6 +17,13 @@ module.exports = {
         defaultValue: 0
       },
       password: Sequelize.DataTypes.STRING(128),
+      createdById:{ 
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'users',
+          key: 'id'
+        }
+      },
       updatedAt: Sequelize.DataTypes.DATE,
       createdAt: Sequelize.DataTypes.DATE
     }, {

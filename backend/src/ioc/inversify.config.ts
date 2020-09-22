@@ -22,6 +22,10 @@ export const containerFactory = async () => {
     const sequelize = await connectToDb();
     container.bind<Sequelize>(TYPES.sequelize).toConstantValue(sequelize);
 
+    // Controllers
+    container.bind<UserController>(TYPES.UserController).to(UserController);
+    container.bind<AuthController>(TYPES.AuthController).to(AuthController);
+
     // Entites
     const user = UserFactory(sequelize);
     container.bind<typeof user>(TYPES.User).toConstantValue(user);
@@ -32,10 +36,6 @@ export const containerFactory = async () => {
     // Services
     container.bind<UserService>(TYPES.UserService).to(UserService);
     container.bind<AuthService>(TYPES.AuthService).to(AuthService);
-
-    // Controllers
-    container.bind<UserController>(TYPES.UserController).to(UserController);
-    container.bind<AuthController>(TYPES.AuthController).to(AuthController);
 
     return container;
 }

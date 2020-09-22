@@ -24,7 +24,8 @@ export class AuthController {
         try {
             const createdUser = await this.userService.createUser({ ...req.body, password: hashedPassword, role: UserRole.Internal });
             return plainToClass(SignupUserResponseDTO, createdUser, { strategy: 'excludeAll' });
-        } catch {
+        } catch(ex) {
+            console.log(ex);
             throw new HttpException(400, 'This user already registered');
         }
     }

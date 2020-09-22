@@ -1,6 +1,5 @@
 import { inject, injectable } from "inversify";
-import { Model } from "sequelize";
-import { User, UserAttributes, UserModel, UserStatic } from "../entites/UserEntity";
+import { UserAttributes, UserModel, UserStatic } from "../entites/UserEntity";
 import TYPES from "../ioc/types";
 
 @injectable()
@@ -13,5 +12,9 @@ export class UserRepository {
 
     async getUserByUsername(username: string): Promise<UserModel | null> {
         return this.user.findOne({ where: { username } });
+    }
+
+    async getUsersByCreationUser(creationId: number): Promise<UserModel[]> {
+        return this.user.findAll({ where: { createdById: creationId } });
     }
 }

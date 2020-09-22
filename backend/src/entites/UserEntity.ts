@@ -10,6 +10,7 @@ export interface UserAttributes {
     username: string;
     password: string;
     role: UserRole;
+    createdById: number;
 }
 
 export interface UserModel extends Model<UserAttributes>, UserAttributes { }
@@ -21,7 +22,7 @@ export type UserStatic = typeof Model & {
 };
 
 export function UserFactory(sequelize: Sequelize): UserStatic {
-    return sequelize.define('users', {
+    const userSchema = <UserStatic>sequelize.define('users', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -35,8 +36,19 @@ export function UserFactory(sequelize: Sequelize): UserStatic {
         role: {
             type: DataTypes.NUMBER,
             defaultValue: 0
+        },
+        createdById: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: 'users', // 'Movies' would also work
+                key: 'id'
+            }
         }
-    })
+    });
+
+    userSchema.hasMany(userSchema, {foreignKey: 'createdById'});
+    userSchema.belongsTo(userSchema, { foreignKey: 'id' });
+    return userSchema;
 }
 
 export class SignupUserDTO {
@@ -75,4 +87,12 @@ export class SigninUserResponseDTO {
 
     @Expose()
     role!: UserRole;
+}
+
+export class ExternalUserResponseDTO {
+    @Expose()
+    username!: string;
+
+    @Expose()
+    id!: number;
 }
