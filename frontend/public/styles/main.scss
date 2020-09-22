@@ -1,1 +1,9 @@
-@import '../styles/components/spinner.scss';
+@import './utils/variables.scss';
+
+@import './layout/layout.scss';
+@import './layout/typography.scss';
+
+@import './components/spinner.scss';
+
+@import './pages/authentication.scss';
+

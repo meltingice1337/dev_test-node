@@ -1,11 +1,11 @@
 import { lazy, FunctionComponent } from 'react';
 import { RouteProps } from 'react-router-dom';
 
-const SignUp = lazy((): Promise<{ default: FunctionComponent }> => import('@pages/authentication/sign-up/SignUp'));
+const SignIn = lazy((): Promise<{ default: FunctionComponent }> => import('@pages/authentication/sign-in/SignIn'));
 
 export const routes: RouteProps[] = [
-    { 
-        component: SignUp,
-        path: '/signup'
+    {
+        component: SignIn,
+        path: '/signin'
     }
 ]
