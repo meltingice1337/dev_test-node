@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig } from "axios"
 import { useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 
 const handleRequest = (token: string, request: AxiosRequestConfig): AxiosRequestConfig => {
     if (request.url) {
@@ -9,7 +10,9 @@ const handleRequest = (token: string, request: AxiosRequestConfig): AxiosRequest
 }
 
 const handleErrorResponse = (error: AxiosError): void => {
-    console.log({ error })
+    if (error.response?.data?.message) {
+        toast.error(error.response.data.message)
+    }
 }
 
 export const useAxios = (): {
