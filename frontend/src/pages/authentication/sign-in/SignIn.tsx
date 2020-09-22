@@ -28,6 +28,7 @@ const SignUp: FunctionComponent = () => {
             history.push('/');
         }
     }
+
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <h3>Login</h3>

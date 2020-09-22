@@ -1,9 +1,9 @@
-import React, { createContext, FunctionComponent, useContext, useEffect, useState } from 'react';
+import React, { createContext, FunctionComponent, useCallback, useContext, useEffect, useState } from 'react';
 import jwt_decode from 'jwt-decode';
 
 import { UserModel } from '@models/authentication.models';
 
-import { useAxios } from '@utils/axios.utils';
+import { useAxios } from '@hooks/axios.hook';
 
 interface AuthenticationContextData {
     authUser: UserModel | null;
@@ -17,11 +17,11 @@ export const AuthenticationProvider: FunctionComponent = ({ children }) => {
 
     const { setRequestInterceptor } = useAxios();
 
-    const authenticate = (token: string): void => {
+    const authenticate = useCallback((token: string): void => {
         setRequestInterceptor(token);
         const decoded = jwt_decode<UserModel>(token);
         setAuthUser(decoded);
-    }
+    }, [setAuthUser]);
 
     useEffect(() => {
         const localStorageToken = localStorage.getItem('token');
@@ -31,7 +31,7 @@ export const AuthenticationProvider: FunctionComponent = ({ children }) => {
         } else if (sessionStorageToken) {
             authenticate(sessionStorageToken);
         }
-    }, []);
+    }, [authenticate]);
 
     return (
         <AuthenticationContext.Provider value={{ authUser, authenticate }}>

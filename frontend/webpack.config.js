@@ -50,7 +50,7 @@ const config = {
 			'@components': path.join(appSourcePath, 'components'),
 			'@contexts': path.join(appSourcePath, 'contexts'),
 			'@services': path.join(appSourcePath, 'services'),
-			'@utils': path.join(appSourcePath, 'utils'),
+			'@hooks': path.join(appSourcePath, 'hooks'),
 			'@models': path.join(appSourcePath, 'models'),
 		}
 	},
