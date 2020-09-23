@@ -40,7 +40,7 @@ export function UserFactory(sequelize: Sequelize) {
         createdById: {
             type: DataTypes.INTEGER,
             references: {
-                model: 'users', // 'Movies' would also work
+                model: 'users',
                 key: 'id'
             }
         }
@@ -50,7 +50,7 @@ export function UserFactory(sequelize: Sequelize) {
     User.belongsTo(User, { foreignKey: 'id' });
 
     const associate = (models: any) => {
-        User.hasOne(models.notes, { foreignKey: 'userId' });
+        User.hasOne(models.notes, { foreignKey: 'userId', onDelete: 'CASCADE', hooks: true });
     }
 
     return [User, associate];

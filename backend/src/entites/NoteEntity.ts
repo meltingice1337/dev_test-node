@@ -33,7 +33,7 @@ export function NoteFactory(sequelize: Sequelize) {
         userId: {
             type: DataTypes.INTEGER,
             references: {
-                model: 'users', // 'Movies' would also work
+                model: 'users',
                 key: 'id'
             }
         }

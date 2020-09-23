@@ -17,8 +17,9 @@ module.exports = {
         defaultValue: 0
       },
       password: Sequelize.DataTypes.STRING(128),
-      createdById:{ 
+      createdById: {
         type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
         references: {
           model: 'users',
           key: 'id'

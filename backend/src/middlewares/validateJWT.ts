@@ -12,7 +12,6 @@ const extractJwt = (req: Request) => {
 }
 
 export const validateJWT = (container: Container) => {
-    // TODO validate with db in case of user deletion
     // TODO remove JWT validation from healthcheck
     const authService = container.get<AuthService>(TYPES.AuthService);
     return (req: Request, res: Response, next: NextFunction) => {

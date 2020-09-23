@@ -47,10 +47,12 @@ export class UserController {
         const authUser = req.locals;
         try {
             const result = await this.userService.deleteExternalUser(id, authUser);
+            console.log({ result })
             if (!result) {
                 throw new HttpException(400, 'User not found or you did not create this user');
             }
-        } catch {
+        } catch (e) {
+            console.log(e)
             throw new HttpException(400, 'User not found or you did not create this user');
         }
     }

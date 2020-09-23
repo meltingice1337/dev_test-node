@@ -14,6 +14,10 @@ export class UserRepository {
         return this.user.findOne({ where: { username } });
     }
 
+    async getUserById(id: number): Promise<UserModel | null> {
+        return this.user.findOne({ where: { id } });
+    }
+
     async getUsersByCreationUser(creationId: number): Promise<UserModel[]> {
         return this.user.findAll({ where: { createdById: creationId } });
     }
