@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosRequestConfig } from "axios"
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 
 const handleRequest = (token: string, request: AxiosRequestConfig): AxiosRequestConfig => {
@@ -16,24 +16,35 @@ const handleErrorResponse = (error: AxiosError): void => {
     }
 }
 
-export const useAxios = (): {
-    setRequestInterceptor: (token: string) => void;
-} => {
+export const useAxios = () => {
+    const [token, setToken] = useState<string | null>(null);
 
     const reqIntRef = useRef<number>();
 
-    const setRequestInterceptor = (token: string) => {
-        if (reqIntRef.current) {
+    useEffect(() => {
+        if (token) {
+            reqIntRef.current = axios.interceptors.request.use(handleRequest.bind(null, token));
+        } else if (reqIntRef.current !== undefined) {
             axios.interceptors.request.eject(reqIntRef.current);
+            reqIntRef.current = undefined;
         }
 
-        reqIntRef.current = axios.interceptors.request.use(handleRequest.bind(null, token));
-    }
+        return () => {
+            if (reqIntRef.current) {
+                axios.interceptors.request.eject(reqIntRef.current);
+                reqIntRef.current = undefined;
+            }
+        }
+    }, [token, reqIntRef]);
 
     useEffect(() => {
         axios.defaults.baseURL = process.env.BACKEND_API;
-        axios.interceptors.response.use((response) => response, handleErrorResponse);
-    }, [])
+        const ref = axios.interceptors.response.use((response) => response, handleErrorResponse);
 
-    return { setRequestInterceptor };
+        return () => {
+            axios.interceptors.response.eject(ref);
+        }
+    }, []);
+
+    return { setToken };
 }

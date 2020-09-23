@@ -16,19 +16,20 @@ const AuthenticationContext = createContext<AuthenticationContextData>({ authUse
 export const AuthenticationProvider: FunctionComponent = ({ children }) => {
     const [authUser, setAuthUser] = useState<UserModel | null>(null)
 
-    const { setRequestInterceptor } = useAxios();
+    const { setToken } = useAxios();
 
     const authenticate = useCallback((token: string): void => {
-        setRequestInterceptor(token);
+        setToken(token);
         const decoded = jwt_decode<UserModel>(token);
         setAuthUser(decoded);
-    }, [setAuthUser]);
+    }, [setAuthUser, setToken]);
 
     const logout = useCallback(() => {
         localStorage.removeItem('token');
         sessionStorage.removeItem('token');
         setAuthUser(null);
-    }, [setAuthUser]);
+        setToken(null);
+    }, [setAuthUser, setToken]);
 
     useEffect(() => {
         const localStorageToken = localStorage.getItem('token');
