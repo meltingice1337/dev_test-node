@@ -1,9 +1,14 @@
+// Utils
 @import "./utils/variables.scss";
+@import "./utils/animations.scss";
 
+// Layout
 @import "./layout/layout.scss";
 @import "./layout/typography.scss";
 
+// Components
 @import "./components/spinner.scss";
 @import "./components/modals.scss";
 
+// Pages
 @import "./pages/authentication.scss";
