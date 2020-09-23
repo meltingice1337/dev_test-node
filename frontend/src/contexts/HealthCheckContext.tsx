@@ -22,7 +22,7 @@ export const HealthCheckProvider: FunctionComponent = (props) => {
             setHealthcheck(true);
         }
 
-    }, [setHealthcheck])
+    }, [setHealthcheck, setLoading])
 
     useEffect(() => {
         checkHealth();
