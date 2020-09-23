@@ -54,7 +54,7 @@ const Users: FunctionComponent = () => {
             <tr key={`user-table-${index}`}>
                 <th scope="row">{index + 1}</th>
                 <td>{user.id}</td>
-                <td>{user.imageUrl && <img src={user.imageUrl} alt="User picture" className="url-image" />} {user.username}</td>
+                <td>{user.imageUrl && <img src={user.imageUrl} alt="User picture" className="url-image small" />} {user.username}</td>
                 <td><button className="btn btn-danger" onClick={deleteUser.bind(null, user)}>Delete user</button></td>
             </tr>
         ));

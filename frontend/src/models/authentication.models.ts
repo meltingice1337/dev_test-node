@@ -10,4 +10,9 @@ export interface UserModel {
     id: number;
     role: UserRoleModel;
     imageUrl: string;
+
+    creator: {
+        username: string;
+        imageUrl: string;
+    }
 }

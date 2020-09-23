@@ -23,6 +23,15 @@ main {
 .url-image {
   max-width: 64px;
   max-height: 64px;
+  margin-left: 4px;
+  margin-right: 4px;
+
+  border-radius: 10px;
+
+  &.small {
+    max-width: 32px;
+    max-height: 32px;
+  }
 }
 
 .table {

@@ -16,7 +16,7 @@ export class UserService {
     }
 
     async findUser(username: string): Promise<UserAttributes> {
-        const user = await this.userRepository.getUserByUsername(username);
+        const user = await this.userRepository.getUserByUsernameWithCreator(username);
         if (!user) {
             throw new HttpException(404, 'Cannot find user');
         } else {

@@ -1,4 +1,6 @@
 import { inject, injectable } from "inversify";
+import { Op, Sequelize } from "sequelize";
+
 import { UserAttributes, UserModel, UserRole, UserStatic } from "../entites/UserEntity";
 import TYPES from "../ioc/types";
 
@@ -10,8 +12,8 @@ export class UserRepository {
         return this.user.create(user);
     }
 
-    async getUserByUsername(username: string): Promise<UserModel | null> {
-        return this.user.findOne({ where: { username } });
+    async getUserByUsernameWithCreator(username: string): Promise<UserModel | null> {
+        return this.user.findOne({ where: { username }, include: [{ on: { id: { [Op.eq]: Sequelize.col('users.createdById') } }, model: this.user, as: 'creator' }] });
     }
 
     async getUserById(id: number): Promise<UserModel | null> {

@@ -8,6 +8,7 @@ import { useAuthContext } from '@contexts/AuthenticationContext';
 import { UserRoleModel } from '@models/authentication.models';
 import { dashboardLayoutAccess, DashboardLayoutAccess } from './DashboardLayout.config';
 import { usePermissions } from '@hooks/permissions.hook';
+import { createPortal } from 'react-dom';
 
 const DashboardLayout: FunctionComponent = () => {
 
@@ -44,10 +45,23 @@ const DashboardLayout: FunctionComponent = () => {
     return (
         <div className="ml-auto mr-auto mt-4 mb-4 container bg-white rounded p-4">
             <div className="d-flex">
-                <h1 className="mt-2">Welcome, {authUser?.username} {authUser?.imageUrl && <img src={authUser?.imageUrl} alt="Profile picture" className="url-image" />}</h1>
+                <h1 className="mt-2">
+                    Welcome,
+                    {authUser?.imageUrl && <img src={authUser?.imageUrl} alt="Profile picture" className="url-image" />}
+                    {authUser?.username}
+                </h1>
+
                 <a href="#" className="ml-auto align-self-center" onClick={onLogoutClick}>Logout</a>
             </div>
             <h5>You are logged in as an <i>{authUser?.role === UserRoleModel.Internal ? 'Internal' : 'External'}</i> user </h5>
+            {
+                authUser?.creator &&
+                <p>
+                    You are were brought into existence by
+                    {authUser?.creator.imageUrl && <img src={authUser?.creator.imageUrl} alt="Creator profile picture" className="url-image small" />}
+                    <i>{authUser.creator.username}</i>
+                </p>
+            }
             {renderNavigation()}
             <div className="tab-content mt-4">
                 <RouteRenderer routes={routes} />

@@ -25,8 +25,6 @@ const AuthenticationContext = createContext<AuthenticationContextData>({ authUse
 export const AuthenticationProvider: FunctionComponent = ({ children }) => {
     const [authUser, setAuthUser] = useState<UserModel | null>(null)
 
-    console.log(Axios.interceptors.response)
-
     const handleErrorResponse = useCallback((error: AxiosError): void => {
         if (error.response?.data) {
             const exception: HttpException = error.response.data;

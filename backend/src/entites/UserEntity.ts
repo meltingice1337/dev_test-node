@@ -1,7 +1,7 @@
 import { Sequelize, DataTypes, Model, ModelDefined, BuildOptions } from "sequelize";
 
 import { IsString } from 'class-validator'
-import { Expose } from "class-transformer";
+import { Expose, Type } from "class-transformer";
 
 export enum UserRole { External, Internal };
 
@@ -48,8 +48,8 @@ export function UserFactory(sequelize: Sequelize) {
         }
     });
 
-    User.hasOne(User, { foreignKey: 'createdById' });
-    User.belongsTo(User, { foreignKey: 'id' });
+    User.hasMany(User, { foreignKey: 'createdById' });
+    User.belongsTo(User, { foreignKey: 'id', as: 'creator' });
 
     const associate = (models: any) => {
         User.hasOne(models.notes, { foreignKey: 'userId', onDelete: 'CASCADE', hooks: true });
@@ -94,6 +94,18 @@ export class SigninUserResponseDTO {
 
     @Expose()
     role!: UserRole;
+
+    @Expose()
+    imageUrl!: string;
+
+    @Expose()
+    @Type(() => SigninUserCreatorResponseDTO)
+    creator!: SigninUserCreatorResponseDTO;
+}
+
+export class SigninUserCreatorResponseDTO {
+    @Expose()
+    username!: string;
 
     @Expose()
     imageUrl!: string;
