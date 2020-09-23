@@ -12,9 +12,12 @@ const extractJwt = (req: Request) => {
 }
 
 export const validateJWT = (container: Container) => {
-    // TODO remove JWT validation from healthcheck
     const authService = container.get<AuthService>(TYPES.AuthService);
-    return (req: Request, res: Response, next: NextFunction) => {
+    return (req: Request, _: Response, next: NextFunction) => {
+        if (req.url === '/healthcheck') {
+            return next();
+        }
+
         const token = extractJwt(req);
         if (token) {
             try {
