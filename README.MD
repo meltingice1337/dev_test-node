@@ -10,7 +10,7 @@
     - can delete `External` users they created
     - can view the notes of the `External` users they created
 
-- All the users (either created or registered) will feature an instagram image, if any, by find the first picture that has the hashtag `#username`.
+- All the users (either created or registered) will feature an instagram image by finding the first picture that has the hashtag `#username` (if available).
 
 # How to start ?
 
