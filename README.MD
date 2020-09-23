@@ -8,9 +8,11 @@
 - `Internal` users
     - can create `External` users
     - can delete `External` users they created
-    - can view the notes of the `External` users they created
+    - can view the notes of the `External` users they created. The available info is: `username`, `note description`, `note title`, `note last update`
 
 - All the users (either created or registered) will feature an instagram image by finding the first picture that has the hashtag `#username` (if available).
+
+- At login the user has the option for the browser to remember the session or not.
 
 # How to start ?
 
