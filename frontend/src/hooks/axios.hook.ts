@@ -13,7 +13,7 @@ const handleRequest = (token: string, request: AxiosRequestConfig): AxiosRequest
 }
 
 export const useAxios = (
-    handleErrorResponse: (error: AxiosError) => void
+    handleErrorResponse?: (error: AxiosError) => void
 ) => {
     const [token, setToken] = useState<string | null>(null);
 

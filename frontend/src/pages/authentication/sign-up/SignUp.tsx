@@ -1,9 +1,11 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { SignUpForm } from './SignUp.model';
+
+import { useLoadingContext } from '@contexts/LoadingContext';
 
 import AuthenticationService from '@services/AuthenticationService';
 
@@ -11,14 +13,20 @@ const SignUp: FunctionComponent = () => {
     const { handleSubmit, register } = useForm();
 
     const history = useHistory();
+    const { setLoading } = useLoadingContext();
 
-    const onSubmit = async (data: SignUpForm): Promise<void> => {
+    const onSubmit = useCallback(async (data: SignUpForm): Promise<void> => {
+        setLoading(true);
         const response = await AuthenticationService.signup({ username: data.username, password: data.password });
         if (response) {
             history.push('/sigin');
-            toast.success('Your account was created with success. You can login now.')
+            setLoading(false);
+            toast.success('Your account was created with success. You can login now.');
+            return;
         }
-    }
+        setLoading(false);
+    }, [setLoading])
+
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <h3>Sign up</h3>

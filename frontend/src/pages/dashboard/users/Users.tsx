@@ -10,10 +10,13 @@ import { CreateUser } from "./CreateUser";
 import { AppState } from "@store/root-reducer";
 import userActions from "@store/actions/user.actions";
 
+import { useLoadingContext } from "@contexts/LoadingContext";
+
 const Users: FunctionComponent = () => {
     const users = useSelector((store: AppState) => store.users);
     const dispatch = useDispatch();
 
+    const { setLoading } = useLoadingContext();
     const [showCreateUser, setShowCreateUser] = useState(false);
 
     const getUsers = useCallback(async () => {
@@ -27,14 +30,16 @@ const Users: FunctionComponent = () => {
         getUsers();
     }, [getUsers])
 
-    const handleCreateUser = async (user: CreateUserModel) => {
+    const handleCreateUser = useCallback(async (user: CreateUserModel) => {
+        setLoading(true);
         const response = await UserService.createUser(user);
         if (response) {
             toast.success('User created with success !');
             dispatch(userActions.addUser(response.data));
             setShowCreateUser(false);
         }
-    }
+        setLoading(false);
+    }, [setLoading])
 
     const deleteUser = async (user: ExternalUserModel) => {
         const response = await UserService.deleteUser(user.id);

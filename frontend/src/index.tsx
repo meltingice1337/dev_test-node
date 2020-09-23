@@ -10,12 +10,13 @@ import App from './App';
 
 import { AuthenticationProvider } from '@contexts/AuthenticationContext';
 import { HealthCheckProvider } from '@contexts/HealthCheckContext';
+import { rootReducer } from './store/root-reducer';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 import '../public/styles/main.scss';
-import { rootReducer } from './store/root-reducer';
+import { LoadingProvider } from '@contexts/LoadingContext';
 
 toast.configure();
 
@@ -27,13 +28,15 @@ const store = createStore(
 
 ReactDOM.render(
     <BrowserRouter>
-        <HealthCheckProvider>
-            <Provider store={store}>
-                <AuthenticationProvider>
-                    <App />
-                </AuthenticationProvider>
-            </Provider>
-        </HealthCheckProvider>
+        <LoadingProvider>
+            <HealthCheckProvider>
+                <Provider store={store}>
+                    <AuthenticationProvider>
+                        <App />
+                    </AuthenticationProvider>
+                </Provider>
+            </HealthCheckProvider>
+        </LoadingProvider>
     </BrowserRouter>,
     document.getElementById('root')
 );
