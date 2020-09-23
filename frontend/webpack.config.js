@@ -53,6 +53,7 @@ const config = {
 			'@hooks': path.join(appSourcePath, 'hooks'),
 			'@models': path.join(appSourcePath, 'models'),
 			'@store': path.join(appSourcePath, 'store'),
+			'@utils': path.join(appSourcePath, 'utils'),
 		}
 	},
 	output: {

@@ -49,6 +49,9 @@
             "@store/*": [
                 "src/store/*"
             ],
+            "@utils/*": [
+                "src/utils/*"
+            ],
         },
         "typeRoots": [
             "./node_modules/@types",

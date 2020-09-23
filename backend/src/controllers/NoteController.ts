@@ -26,11 +26,7 @@ export class NoteController {
         const user = request.locals as UserAttributes;
         console.log({ role: user.role })
         if (user.role === UserRole.External) {
-            const note = await this.noteService.getOwnNote(user);
-            if (!note) {
-                throw new HttpException(404, 'No note found');
-            }
-            return note;
+            return this.noteService.getOwnNote(user);
         } else {
             return this.noteService.getExternalNotes(user);
         }

@@ -1,0 +1,3 @@
+export enum EXCEPTION_CODES {
+    INVALID_TOKEN = 'INVALID_TOKEN'
+}

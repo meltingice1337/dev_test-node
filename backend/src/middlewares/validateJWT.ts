@@ -3,6 +3,7 @@ import { Container } from 'inversify';
 import { HttpException } from '../exceptions/HttpException';
 import { AuthService } from '../services/AuthService';
 import TYPES from '../ioc/types';
+import { InvalidTokenException } from '../exceptions/InvalidTokenException';
 
 const extractJwt = (req: Request) => {
     if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
@@ -20,7 +21,7 @@ export const validateJWT = (container: Container) => {
             try {
                 req.locals = authService.verifyToken(token);
             } catch {
-                throw new HttpException(401, 'Invalid token !');
+                throw new InvalidTokenException();
             }
         }
         next();

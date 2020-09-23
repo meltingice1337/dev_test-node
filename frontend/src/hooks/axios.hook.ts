@@ -2,6 +2,9 @@ import axios, { AxiosError, AxiosRequestConfig } from "axios"
 import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 
+import { EXCEPTION_CODES } from "@utils/ExceptionCodes";
+import { useAuthContext } from "@contexts/AuthenticationContext";
+
 const handleRequest = (token: string, request: AxiosRequestConfig): AxiosRequestConfig => {
     if (request.url) {
         request.headers['Authorization'] = `Bearer ${token}`;
@@ -9,15 +12,11 @@ const handleRequest = (token: string, request: AxiosRequestConfig): AxiosRequest
     return request;
 }
 
-const handleErrorResponse = (error: AxiosError): void => {
-    //TODO deauth user if incorrect token
-    if (error.response?.data?.message) {
-        toast.error(error.response.data.message)
-    }
-}
-
-export const useAxios = () => {
+export const useAxios = (
+    handleErrorResponse: (error: AxiosError) => void
+) => {
     const [token, setToken] = useState<string | null>(null);
+
 
     const reqIntRef = useRef<number>();
 
@@ -40,11 +39,10 @@ export const useAxios = () => {
     useEffect(() => {
         axios.defaults.baseURL = process.env.BACKEND_API;
         const ref = axios.interceptors.response.use((response) => response, handleErrorResponse);
-
         return () => {
             axios.interceptors.response.eject(ref);
         }
-    }, []);
+    }, [handleErrorResponse]);
 
     return { setToken };
 }
