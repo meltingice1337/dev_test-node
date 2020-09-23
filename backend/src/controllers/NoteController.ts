@@ -35,8 +35,8 @@ export class NoteController {
             return this.noteService.getExternalNotes(user);
         }
     }
-    //TODO only external users can do this , authenticated(UserRole.External, false)
-    @httpPost('/', validationMiddleware(NoteDTO))
+
+    @httpPost('/', validationMiddleware(NoteDTO), authenticated(UserRole.External, false))
     public async create(@request() request: Request) {
         const user = request.locals as UserAttributes;
         const note = await this.noteService.createNote(request.body, user);

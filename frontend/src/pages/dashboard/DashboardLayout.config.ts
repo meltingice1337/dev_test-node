@@ -10,5 +10,10 @@ export const dashboardLayoutAccess: DashboardLayoutAccess[] = [
         link: '/users',
         label: 'Users',
         role: UserRoleModel.Internal
+    },
+    {
+        link: '/note',
+        label: 'Note',
+        role: UserRoleModel.External
     }
 ]
