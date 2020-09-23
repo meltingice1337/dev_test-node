@@ -47,7 +47,7 @@ const Users: FunctionComponent = () => {
     const renderData = (): JSX.Element[] => {
         return users.map((user, index) => (
             <tr key={`user-table-${index}`}>
-                <th scope="row">{index}</th>
+                <th scope="row">{index + 1}</th>
                 <td>{user.id}</td>
                 <td>{user.username}</td>
                 <td><button className="btn btn-danger" onClick={deleteUser.bind(null, user)}>Delete user</button></td>
@@ -63,7 +63,7 @@ const Users: FunctionComponent = () => {
                 <thead className="thead-dark">
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Id</th>
+                        <th scope="col">ID</th>
                         <th scope="col">Username</th>
                         <th scope="col"></th>
                     </tr>
