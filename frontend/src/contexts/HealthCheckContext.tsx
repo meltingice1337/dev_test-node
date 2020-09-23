@@ -11,11 +11,13 @@ const HealthCheckContext = createContext<HealthCheckContextData>({ healtcheck: f
 
 export const HealthCheckProvider: FunctionComponent = (props) => {
     const [healtcheck, setHealthcheck] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useAxios();
 
     const checkHealth = useCallback(async () => {
         const response = await HealthCheckService.getHealthCheck();
+        setLoading(false);
         if (response && response.data) {
             setHealthcheck(true);
         }
@@ -28,7 +30,7 @@ export const HealthCheckProvider: FunctionComponent = (props) => {
 
     return (
         <HealthCheckContext.Provider value={{ healtcheck }}>
-            {healtcheck ? props.children : 'The server has no health'}
+            {!loading && (healtcheck ? props.children : 'The server has no health')}
         </HealthCheckContext.Provider>
     )
 }
