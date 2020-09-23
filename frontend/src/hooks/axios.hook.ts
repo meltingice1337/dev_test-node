@@ -10,6 +10,7 @@ const handleRequest = (token: string, request: AxiosRequestConfig): AxiosRequest
 }
 
 const handleErrorResponse = (error: AxiosError): void => {
+    //TODO deauth user if incorrect token
     if (error.response?.data?.message) {
         toast.error(error.response.data.message)
     }
@@ -32,7 +33,6 @@ export const useAxios = (): {
     useEffect(() => {
         axios.defaults.baseURL = process.env.BACKEND_API;
         axios.interceptors.response.use((response) => response, handleErrorResponse);
-
     }, [])
 
     return { setRequestInterceptor };

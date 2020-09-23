@@ -11,6 +11,7 @@ const extractJwt = (req: Request) => {
 }
 
 export const validateJWT = (container: Container) => {
+    // TODO validate with db in case of user deletion
     const authService = container.get<AuthService>(TYPES.AuthService);
     return (req: Request, res: Response, next: NextFunction) => {
         const token = extractJwt(req);

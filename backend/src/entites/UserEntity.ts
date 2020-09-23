@@ -21,8 +21,8 @@ export type UserStatic = typeof Model & {
     new(values?: object, options?: BuildOptions): UserModel;
 };
 
-export function UserFactory(sequelize: Sequelize): UserStatic {
-    const userSchema = <UserStatic>sequelize.define('users', {
+export function UserFactory(sequelize: Sequelize) {
+    const User = <UserStatic>sequelize.define('users', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -46,9 +46,14 @@ export function UserFactory(sequelize: Sequelize): UserStatic {
         }
     });
 
-    userSchema.hasMany(userSchema, {foreignKey: 'createdById'});
-    userSchema.belongsTo(userSchema, { foreignKey: 'id' });
-    return userSchema;
+    User.hasOne(User, { foreignKey: 'createdById' });
+    User.belongsTo(User, { foreignKey: 'id' });
+
+    const associate = (models: any) => {
+        User.hasOne(models.notes, { foreignKey: 'userId' });
+    }
+
+    return [User, associate];
 }
 
 export class SignupUserDTO {
