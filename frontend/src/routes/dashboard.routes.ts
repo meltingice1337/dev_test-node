@@ -5,12 +5,18 @@ import { RouteProps } from 'react-router-dom';
 
 const Users = lazy((): Promise<{ default: FunctionComponent }> => import('@pages/dashboard/users/Users'));
 const OwnNote = lazy((): Promise<{ default: FunctionComponent }> => import('@pages/dashboard/notes/OwnNote'));
+const UserNotes = lazy((): Promise<{ default: FunctionComponent }> => import('@pages/dashboard/notes/UserNotes'));
 
 export const routes: RoutePropsWithRole[] = [
     {
         component: Users,
         role: UserRoleModel.Internal,
         path: '/users'
+    },
+    {
+        component: UserNotes,
+        role: UserRoleModel.Internal,
+        path: '/user-notes'
     },
     {
         component: OwnNote,

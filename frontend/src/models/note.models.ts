@@ -8,3 +8,9 @@ export interface NoteModelDTO {
     updatedAt: string;
     data: NoteModel;
 }
+
+export interface NoteExternalModelDTO {
+    username: string;
+    id: number;
+    note: NoteModelDTO;
+}

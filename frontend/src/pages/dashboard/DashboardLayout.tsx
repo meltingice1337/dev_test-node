@@ -1,18 +1,19 @@
 import React, { FunctionComponent, MouseEvent, useMemo } from 'react';
+import { Link, matchPath, useLocation } from 'react-router-dom';
 
 import { RouteRenderer } from '@components/route-renderer/RouteRenderer';
 
 import { routes } from '@routes/dashboard.routes';
 import { useAuthContext } from '@contexts/AuthenticationContext';
 import { UserRoleModel } from '@models/authentication.models';
-import { dashboardLayoutAccess } from './DashboardLayout.config';
+import { dashboardLayoutAccess, DashboardLayoutAccess } from './DashboardLayout.config';
 import { usePermissions } from '@hooks/permissions.hook';
-import { Link } from 'react-router-dom';
 
 const DashboardLayout: FunctionComponent = () => {
 
     const { authUser, logout } = useAuthContext();
     const { hasRole } = usePermissions();
+    const location = useLocation();
 
     const filteredAccess = useMemo(() => dashboardLayoutAccess.filter(a => hasRole(a.role)), [authUser, hasRole]);
 
@@ -23,12 +24,14 @@ const DashboardLayout: FunctionComponent = () => {
 
     const renderNavigation = () => {
         if (filteredAccess.length > 1) {
+            const activeRoute = (access: DashboardLayoutAccess) => matchPath(location.pathname, { path: access.link })
+
             return (
                 <nav className="nav nav-pills">
                     {
                         filteredAccess.map((access, index) => (
                             <li className="nav-item" key={`nav-i-${index}`}>
-                                <Link className="nav-link active" to={access.link}>{access.label}</Link>
+                                <Link className={`nav-link ${activeRoute(access) ? 'active' : ''}`} to={access.link}>{access.label}</Link>
                             </li>
                         ))
                     }

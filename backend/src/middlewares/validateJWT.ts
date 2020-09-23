@@ -18,7 +18,6 @@ export const validateJWT = (container: Container) => {
         if (token) {
             try {
                 req.locals = authService.verifyToken(token);
-                console.log(req.locals)
             } catch {
                 throw new HttpException(401, 'Invalid token !');
             }
