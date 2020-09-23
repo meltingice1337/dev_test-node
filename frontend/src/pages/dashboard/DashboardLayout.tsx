@@ -44,7 +44,7 @@ const DashboardLayout: FunctionComponent = () => {
     return (
         <div className="ml-auto mr-auto mt-4 mb-4 container bg-white rounded p-4">
             <div className="d-flex">
-                <h1 className="mt-2">Welcome, {authUser?.username}</h1>
+                <h1 className="mt-2">Welcome, {authUser?.username} {authUser?.imageUrl && <img src={authUser?.imageUrl} alt="Profile picture" className="url-image" />}</h1>
                 <a href="#" className="ml-auto align-self-center" onClick={onLogoutClick}>Logout</a>
             </div>
             <h5>You are logged in as an <i>{authUser?.role === UserRoleModel.Internal ? 'Internal' : 'External'}</i> user </h5>

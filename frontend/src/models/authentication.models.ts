@@ -9,4 +9,5 @@ export interface UserModel {
     username: string;
     id: number;
     role: UserRoleModel;
+    imageUrl: string;
 }

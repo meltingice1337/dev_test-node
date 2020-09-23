@@ -4,13 +4,12 @@ import TYPES from "./types";
 
 import { connectToDb } from "../db";
 
-import { UserFactory } from "../entites/UserEntity";
-import { NoteFactory } from "../entites/NoteEntity";
 import { initializeFactories } from "../entites";
 
 import { UserService } from "../services/UserService";
 import { AuthService } from "../services/AuthService";
 import { NoteService } from "../services/NoteService";
+import { InstagramService } from "../services/InstagramService";
 
 import { UserRepository } from "../repository/UserRepository";
 
@@ -44,6 +43,7 @@ export const containerFactory = async () => {
     container.bind<UserService>(TYPES.UserService).to(UserService);
     container.bind<AuthService>(TYPES.AuthService).to(AuthService);
     container.bind<NoteService>(TYPES.NoteService).to(NoteService);
+    container.bind<InstagramService>(TYPES.InstagramService).to(InstagramService);
 
     return container;
 }

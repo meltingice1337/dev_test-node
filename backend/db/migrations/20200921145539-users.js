@@ -17,6 +17,7 @@ module.exports = {
         defaultValue: 0
       },
       password: Sequelize.DataTypes.STRING(128),
+      imageUrl: Sequelize.DataTypes.STRING(2048),
       createdById: {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',

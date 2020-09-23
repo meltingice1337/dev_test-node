@@ -21,6 +21,7 @@ const TYPES = {
     AuthService: Symbol('AuthService'),
     UserService: Symbol('UserService'),
     NoteService: Symbol('NoteService'),
+    InstagramService: Symbol('InstagramService'),
 }
 
 export default TYPES;

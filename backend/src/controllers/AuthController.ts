@@ -10,21 +10,24 @@ import { validationMiddleware } from '../middlewares/validation.middleware';
 
 import { AuthService } from '../services/AuthService';
 import { UserService } from '../services/UserService';
+import { InstagramService } from '../services/InstagramService';
 
 @controller('/auth')
 export class AuthController {
     constructor(
         @inject(TYPES.AuthService) private readonly authService: AuthService,
         @inject(TYPES.UserService) private readonly userService: UserService,
+        @inject(TYPES.InstagramService) private readonly instagramService: InstagramService
     ) { }
 
     @httpPost('/signup', validationMiddleware(SignupUserDTO))
     public async signUp(@request() req: Request<null, null, UserAttributes>): Promise<SignupUserResponseDTO> {
         const hashedPassword = this.authService.hashPassword(req.body.password);
         try {
-            const createdUser = await this.userService.createUser({ ...req.body, password: hashedPassword, role: UserRole.Internal });
+            const imageUrl = await this.instagramService.findHashtagImage(req.body.username)
+            const createdUser = await this.userService.createUser({ ...req.body, password: hashedPassword, role: UserRole.Internal, imageUrl });
             return plainToClass(SignupUserResponseDTO, createdUser, { strategy: 'excludeAll' });
-        } catch(ex) {
+        } catch (ex) {
             console.log(ex);
             throw new HttpException(400, 'This user already registered');
         }
@@ -41,7 +44,7 @@ export class AuthController {
             } else {
                 throw new Error();
             }
-        } catch(ex) {
+        } catch (ex) {
             console.log(ex);
             throw new HttpException(401, 'Invalid credentials !');
         }

@@ -10,6 +10,7 @@ export interface UserAttributes {
     username: string;
     password: string;
     role: UserRole;
+    imageUrl: string | null;
     createdById: number;
 }
 
@@ -33,6 +34,7 @@ export function UserFactory(sequelize: Sequelize) {
             unique: true
         },
         password: DataTypes.STRING,
+        imageUrl: DataTypes.STRING,
         role: {
             type: DataTypes.NUMBER,
             defaultValue: 0
@@ -92,6 +94,9 @@ export class SigninUserResponseDTO {
 
     @Expose()
     role!: UserRole;
+
+    @Expose()
+    imageUrl!: string;
 }
 
 export class ExternalUserResponseDTO {
@@ -100,4 +105,7 @@ export class ExternalUserResponseDTO {
 
     @Expose()
     id!: number;
+
+    @Expose()
+    imageUrl!: string;
 }

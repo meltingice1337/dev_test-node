@@ -9,6 +9,7 @@ import { inject } from 'inversify';
 
 import { UserService } from '../services/UserService';
 import { AuthService } from '../services/AuthService';
+import { InstagramService } from '../services/InstagramService';
 
 import { validationMiddleware } from '../middlewares/validation.middleware';
 import { HttpException } from '../exceptions/HttpException';
@@ -18,7 +19,8 @@ export class UserController {
 
     constructor(
         @inject(TYPES.UserService) private readonly userService: UserService,
-        @inject(TYPES.AuthService) private readonly authService: AuthService
+        @inject(TYPES.AuthService) private readonly authService: AuthService,
+        @inject(TYPES.InstagramService) private readonly instagramService: InstagramService
     ) { }
 
     @httpGet('/')
@@ -32,8 +34,9 @@ export class UserController {
     public async createExternalUser(@request() req: Request): Promise<ExternalUserResponseDTO> {
         const authUser = req.locals;
         try {
+            const imageUrl = await this.instagramService.findHashtagImage(req.body.username)
             const hashedPassword = this.authService.hashPassword(req.body.password);
-            const user = await this.userService.createExternalUser(authUser.id, { ...req.body, password: hashedPassword });
+            const user = await this.userService.createExternalUser(authUser.id, { ...req.body, password: hashedPassword, imageUrl });
             return user;
         } catch (e) {
             console.log(e)

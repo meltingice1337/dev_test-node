@@ -21,7 +21,7 @@ export class NoteService {
 
     public async getExternalNotes(user: UserAttributes): Promise<any> {
         const users = await this.userEntity.findAll({ where: { createdById: user.id }, include: this.noteEntity })
-        const transformed = plainToClass(UserNoteDTO, users.map(u => u.get()), { strategy: 'excludeAll' });
+        const transformed = plainToClass(UserNoteDTO, users.map(u => u.get()), { strategy: 'excludeAll' }).filter(u => u.note !== null);
         return transformed;
     }
 
