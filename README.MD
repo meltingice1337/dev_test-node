@@ -1,4 +1,4 @@
-# Node.JS & Postgres + React boilerplate
+# Node.JS & Postgress + React + Docker boilerplate
 
 This repository contains the boilerplate for creating a full application using the Javascript Stack. The arhitecture is as following:
 - The backend written with `Node.JS` using
@@ -9,7 +9,7 @@ This repository contains the boilerplate for creating a full application using t
 - The frontend written with `React` which includes
     - Simple authentication & authorization using `React Contexts`
     - Form validation using `react-form-hooks`
-
+- Docker which starts the backend, the frontend and docker with the proper environment variables and ports
 # App overview & Features
 - There are 2 types of users, `Internal` and `External`
     - `Internal` users are created at sign up
