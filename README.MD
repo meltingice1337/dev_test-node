@@ -1,4 +1,16 @@
-# App overview
+# Node.JS & Postgres + React boilerplate
+
+This repository contains the boilerplate for creating a full application using the Javascript Stack. The arhitecture is as following:
+- The backend written with `Node.JS` using
+    - `Express` as the web framework using an 3-Layer arhitecture
+    - `Sequlize` as the ORM for accessing the `Postgress` database
+    - `Inversify.JS` for IOC (inversion of control) used for putting all of this together
+    - `Puppeteer` & `Cheerio` used for scraping instagram in order to get certain pictures
+- The frontend written with `React` which includes
+    - Simple authentication & authorization using `React Contexts`
+    - Form validation using `react-form-hooks`
+
+# App overview & Features
 - There are 2 types of users, `Internal` and `External`
     - `Internal` users are created at sign up
     - `External` users are created by `Internal` users 
